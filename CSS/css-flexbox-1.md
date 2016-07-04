@@ -25,7 +25,7 @@ W3C候选标准，2016年5月26日
   + 4.2 flex项的margin和padding
   + 4.3 flex项的z-ordering
   + 4.4 折叠项
-  + 4.5 flex的项目隐含最小尺寸
+  + 4.5 flex项默认最小尺寸
 
 + 5 排列和定位
   + 5.1 flex流方向：'flex-direction'属性
@@ -230,7 +230,7 @@ flex容器并不是block容器，所以一些以block布局为假设的前提下
 >
 > 同时注意匿名项的盒子是无法用添加样式的，因为没有元素去分配样式规则。然后它的内容仍然会从flex容器继承样式（比如字体设置）。
 
-[flex项][1-24]为它的内容建立新的格式上下文。格式上下文的类型通常由['display'][1-15]属性值决定。然而，flex项本身是*flex级*的盒子，并非块级的盒子：它们参与到它们容器的flex格式上下文中，而不是块状格式上下文。
+[flex项][2-6]为它的内容建立新的格式上下文。格式上下文的类型通常由['display'][1-15]属性值决定。然而，flex项本身是*flex级*的盒子，并非块级的盒子：它们参与到它们容器的flex格式上下文中，而不是块状格式上下文。
 
 ---
 
@@ -241,55 +241,49 @@ flex容器并不是block容器，所以一些以block布局为假设的前提下
 > 注意：['display'][1-15]的某些值通常下会引发匿名盒子在原盒子外面被创建。如果这样的盒子是[flex项][2-6]，它首先会被块状化，那么不会发生匿名盒子的创建。例如，两个相邻的['display: table-cell'][1-15]的[flex项][2-6]会变成两个独立的['display: block'][1-15]的[flex项][2-6]，而不是被一个单独的匿名table所包裹。
 
 ### 4.1 绝对定位flex子元素
+因为脱离了flex流，一个被绝对定位的[flex容器][3-2]的子元素不参与flex布局。
 
-因为它脱离了flex流，一个被绝对定位的flex容器的子元素不参与flex布局。
+绝对定位的[flex容器][3-2]的子元素的[静态位置][4-6]会这样确定，导致该子元素就好像是[flex容器][3-2]中的仅有的[flex项][2-6]一样，假设子元素和flex容器都是以它们使用的尺寸为固定尺寸的盒子的话。出于这个目的，['align-self: auto'][1-13]的值会被等同于'start'来对待。
 
-绝对定位的flex容器的子元素的静态位置会这样确定，以致于该子元素就好像是flex容器中的仅有的flex项一样，假设子元素和flex容器都是以它们使用的尺寸为固定尺寸的盒子的话。出于这个目的，'align-self: auto'的值会被等同于'start'来对待。
+> 换句话说，flex容器绝对定位子元素的[静态位置矩形][4-7]就是[flex容器][3-2]的内容盒子，在这里*静态位置矩形*就是用来确定静态位置位移和绝对位置位移的[对齐容器][4-8]。
+> 
+> （在block布局中静态位置矩形和[CSS2.1§10.3.7][4-9]中描述的"假想盒子"一致，因为它没有对齐属性，CSS2.1总会用[block-start][4-10] [inline-start][4-11]来对齐[静态位置矩形][4-7]中的绝对定位盒子。注意该定义最终会移到CSS定位模块中。）
 
-换句话说，flex容器绝对定位子元素的静态位置的矩形就是flex容器的内容盒子，在这里静态位置矩形就是用来确定静态位置位移和绝对位置位移的对齐容器。
+> **例3**  
+> 设置了绝对定位的影响是，譬如，在flex容器的绝对定位子元素设置了['align-content: center;'][4-12]，子元素上自动的偏移会使它在[flex容器][3-2]的[侧轴][4-13]上居中。
+> 
+> 然而，因为绝对定位子盒子被认为是"固定尺寸"的，['stretch'][4-14]的值会被对待为['flex-start'][4-15]。
 
-（在block布局中静态位置矩形响应CSS2.1§10.3.7中描述的"假想盒子"的变化，因为它没有对齐属性，CSS2.1总会用block-start inline-start来对齐静态位置矩形中的绝对定位盒子。注意该定义最终会移到CSS定位模块中。）
+### 4.2 flex项的margin和padding
+[flex项][2-6]的margin不会[合并][4-16]。
 
-例3
-影响是如果你设置了它，例如，在flex容器的绝对定位子元素设置了'align-content: center;'，子元素上自动的偏移会使它在flex容器的交叉轴上居中。
-
-然后，因为决定定位子盒子被认为是"固定尺寸"的，'stretch'的值会被对待为'flex-start'
-
-4.2 flex项的margin和padding
-
-flex项的margin不会合并。
-
-flex项的百分比margin和padding会相对于下面之一来决定：
-
-- 他们本身的轴（left/right百分比相对于width决定，top/bottom百分比相对于高度），或者，
-- 行内轴（left/right/top/bottom百分比都相对于宽度决定）
+[flex项][2-6]的百分比margin和padding会相对于下面二者之一来决定：
++ 他们本身的坐标（left/right百分比相对于width决定，top/bottom百分比相对于高度），或者，
++ 行内坐标（left/right/top/bottom百分比都相对于宽度决定）
 
 客户端必须选择两种行为之一。
 
-注意：这种不一致太差劲了，但是它准确地捕捉了世界的当前状态（在实现上没有共识，在CSSWG内部没有共识）。这正是CSSWG的意图：浏览器会覆盖两种行为之一，到时候再根据需求修改。
+> 注意：这种不一致太差劲了，但是它准确地捕捉了世界的当前状态（在实现上没有共识，在CSSWG内部没有共识）。这正是CSSWG的意图：浏览器会覆盖两种行为之一，到时候再根据需求修改。
 
-作者应该避免在所有flex项的margin或者padding中使用百分比，因为它们在不同浏览器中表现不一致。
+> <center>作者应该避免在所有[flex项][2-6]的margin或者padding中使用百分比，因为它们在不同浏览器中表现不一致。</center>
 
-auto的margin在相应的维度上会扩展来吸收额外的空间。它们可以用于对齐，或者将相邻的flex项分离。参考用'auto'的margin对齐。
+margin为auto在相应的维度上会扩展来吸收额外的空间。它们可以用于对齐，或者将相邻的flex项分离。参考[用'auto'的margin对齐][1-14]。
 
-4.3 flex项的z-ordering
+### 4.3 flex项的Z-Ordering
+[flex项][2-6]就像和行内块一样绘制 [[CSS21]][1-16]，除了用['order'][1-12]修改的文档顺序来替代原始的文档顺序，而且['auto'][4-16]以外的['z-index'][4-17]值创建了层叠上下文，即便['position'][4-18]是['static'][4-19]。
 
-flex项恰好和行内块一样绘制 [CSS21]，除了'order'-modified文档顺序用来替代原始的文档顺序，而且'auto'以外的'z-index'值创建了层叠的上下文，即便'position'是'static'。
+> 注意：在flex项外面被定位的后代元素仍然参与flex项创建的任何层叠上下文。
 
-注意：在flex项外面被定位的后代元素仍然参与flex项创建的任何层叠上下文。
+### 4.4 收起项
+在flex项上指定'visibility:collapse'会让它成为*收起的flex项*，产生类似于在table-row或者table-column上设置'visibility:collapse'的影响：合并的flex项被移除来防止整体渲染，但是留下"支柱"来保持flex行侧轴尺寸的稳定。所以，如果一个flex容器只有一个flex行，动态折叠或展开flex项可能改变[flex容器][3-2]的[主轴尺寸][4-20]，但是会确保不影响[侧轴尺寸][1-11]而且不会引起剩余页面"晃动"布局。在折叠后，flex折行*会*重来一遍，然而，有多行的flex容器的交叉可能会也可能不会发生变化。
 
-4.4 折叠项
+尽管折叠的flex项不会被渲染，它们确实会出现在[格式结构][4-21]中。所以，不像'display:none'的项 [[CSS21]][1-16]，追加到出现在格式结构盒子上的效果会（像递增计数器或运行动画和过渡）仍然会作用于折叠的项。
 
-在flex项上指定'visibility:collapse'会让它成为折叠的flex项，产生类似于在table-row或者table-column上设置'visibility:collapse'的影响：合并的flex项被移除来防止整体渲染，但是留下"支柱"来保持flex行交叉尺寸的稳定。所以，如果一个flex容器只有一个flex行，动态折叠或展开flex项可能改变flex容器的主尺寸，但是会确保不影响交叉尺寸而且不会引起剩余页面"晃动"布局。在折叠后，flex折行会重来一遍，然而，有多行的flex容器的交叉可能会或不会发生变化。
-
-尽管折叠的flex项不会被渲染，它们确实会出现在格式结构中。所以，不像'display:none'的项 [CSS21]，追加到出现在格式结构盒子上的效果会（像递增计数器或运行动画和过渡）仍然会作用于折叠的项。
-
-例4
-
-在下面的示例中，侧边栏被设置了尺寸来与它的内容相适应。'visibility:collapse'用于动态隐藏导航侧边栏的一部分而不用影响它的宽度，即使最宽的项（"Architecture"）在一个折叠的区域中。
-
+> **例4**  
+> 在下面的示例中，侧边栏被设置了尺寸来与它的内容相适应。['visibility:collapse'][4-22]用于不影响宽度的情况下动态隐藏导航侧边栏的一部分，即使最宽的项（"Architecture"）在一个收起的区域中。
+```css
 @media (min-width: 60em) {
-  /* 两列布局仅当有足够空间时（相对于默认的文本尺寸） */
+  /* 仅当有足够空间时两列布局（相对于默认的文本尺寸） */
   div { display: flex; }
   #main {
     flex: 1;         /* main占据了所有的剩余空间 */
@@ -306,7 +300,8 @@ nav > ul > li {
 nav > ul > li:not(:target):not(:hover) > ul {
   visibility: collapse;
 }
-
+```
+```html
 <div>
   <article id="main">
     Interesting Stuff to Read
@@ -328,9 +323,50 @@ nav > ul > li:not(:target):not(:hover) > ul {
 </div>
 <footer>
 …
+```
 
-为了计算撑起来的尺寸，flex布局首次执行随着所有项被展开，随后重新执行
+为了计算撑起来的尺寸，flex布局开始随着所有项被展开时完成，然后在每一个项收起时被一个保持该项最初行的最初侧轴尺寸的支柱替代时重新布局。参考[flex布局算法][4-23]来查看'visibility:collapse'与flex布局交互的正式定义。
 
+> 注意：在任何flex项上面使用'visibility:collapse'会导致部分flex布局算法重复执行代价最高的步骤。推荐作者继续使用'display:none'来隐藏不会被动态收起和展开的项，因为这对渲染引擎是更高效的。（既然当['visibility'][4-22]改变时只有部分步骤需要重复，然而对于动态的情况仍然推荐'visibility:collapse'）
+
+### 4.5 flex项默认最小尺寸
+为了给[flex项][2-6]提供一个更合理的最小尺寸，规范引入了一个新的['auto'][4-23]值作为CSS2.1中定义的['min-width'][4-24]和['min-height'][4-25]的初始值。[[CSS21]][1-16]
+
+<table>
+<tbody>
+<tr><td>Name:</td><td>['min-width'][4-24], ['min-height'][4-25]</td></tr>
+<tr><td>New values:</td><td>auto</td></tr>
+<tr><td>New Initial value></td><td>auto</td></tr>
+<tr><td>New computed value:</td><td>规定的百分比或绝对长度或关键字</td></tr>
+</tbody>
+</table>
+ 
+'auto'  
+&emsp;&emsp;在一个[主轴][1-6]上['overflow'][3-4]为['visible'][3-4]的[flex项][2-6]上，当指定了[flex项][2-6]的主轴最小尺寸属性时，指定一个*自动最小尺寸*。否则会计算为'0'（除非在将来的规范中另有定义）。
+
+通常来讲，[自动最小尺寸][4-26]是[内容尺寸][4-27]和[指定尺寸][4-28]两者中小的那个。然而，如果盒子有高宽比而且没有[指定尺寸][4-28]，它的[自动最小尺寸][4-26]是[内容尺寸][4-27]和[转换尺寸][4-29]两者中小的那个。
+
+该计算中用到的[内容尺寸][4-27]、[指定尺寸][4-28]和[转换尺寸][4-29]占用了相对了最小/最大/优先尺寸属性所以[自动最小尺寸][4-26]不干扰作者提供的约束，并且定义如下：
+
+*指定尺寸*  
+&emsp;&emsp;如果一项的[主轴尺寸属性][4-30]是[明确的][4-31]，那么[指定尺寸][4-28]就是那个尺寸（被[主轴尺寸属性][4-30]限制如果它是[明确的][4-31]）。否是就是未定义的。
+
+*转换尺寸*  
+&emsp;&emsp;如果一项有固定的高宽比并且计算后的[侧轴尺寸属性][4-32]是明确的，那么[转换尺寸][4-29]就是那个尺寸（被[主轴尺寸属性][4-30]限制如果它们是[明确的][4-31]）。通过高宽比转换。否则就是未定义的。
+
+*内容尺寸*  
+&emsp;&emsp;[内容尺寸][4-26]是[主轴][1-6]上的[最小内容尺寸][4-33]，如果有高宽比，是通过任何由高宽比转换的[明确的][4-31][最小和最大侧轴尺寸][4-32]属性限制的，然后进一步由[最大主轴尺寸属性][4-30]限制如果它是[明确的][4-31]。
+
+出于计算一个元素初始尺寸（譬如元素的[最小内容尺寸][4-33]）的目的，这个值会使元素尺寸在对应轴上变为不明确（就算它的['width'][2-8]属性指定为[明确的][4-31]尺寸）。注意这意味着相对于这个尺寸百分比会被当作'auto'对待。
+
+但是，尽管在某些情况下这需要传递额外的布局去解析百分比，该值（像[[CSS3-SIZING]][2-13]中定义的['min-content'][4-34]、['max-content'][4-35]和['fit-content'][4-36]）不会防止该项内部的百分比被解析。
+
+> 注意虽然基于内容的最小尺寸通常是合适的，而且有助于防止内容重叠或者容器外分割，但是在某些情况却不是这样的：
+>
+> 特殊地，如果flex尺寸用于一个文档的主体内容区域，最好设置一个确切的相对字体的最小宽度如['min-width: 12em'][4-24]。基于内容的最小宽度会导致一个很大的表格或很大的图片在伸展尺寸到整个区域，从而也会使文本没有必要地长而且难以阅读。
+>
+> 同时注意，当基于内容的尺寸被用在带有大量内容的项上时，布局引擎在找到最小尺寸前必须得遍历所有的内容，反而如果我们设置了确切的最小值，又是没有必要的。（对于带有少量的内容的项，遍历不重要，也不是性能关注点了。）
+ 
 [0-1]: http://www.w3.org/TR/CSS/
 [1-1]: https://www.w3.org/TR/CSS2/visuren.html#floats
 [1-2]: https://www.w3.org/TR/css3-multicol/
@@ -377,3 +413,34 @@ nav > ul > li:not(:target):not(:hover) > ul {
 [4-3]: https://www.w3.org/TR/css-flexbox-1/#item-margins
 [4-4]: https://www.w3.org/TR/css-display/#transformations
 [4-5]: https://www.w3.org/TR/css-flexbox-1/#biblio-css3-display
+[4-6]: https://www.w3.org/TR/CSS2/visudet.html#abs-non-replaced-width
+[4-7]: https://www.w3.org/TR/css-flexbox-1/#static-position-rectangle
+[4-8]: https://www.w3.org/TR/css3-align/#alignment-container
+[4-9]: https://www.w3.org/TR/CSS2/visudet.html#abs-non-replaced-width
+[4-10]: https://www.w3.org/TR/css-writing-modes-3/#block-start
+[4-11]: https://www.w3.org/TR/css-writing-modes-3/#inline-start
+[4-12]: https://www.w3.org/TR/css-flexbox-1/#propdef-align-content
+[4-13]: https://www.w3.org/TR/css-flexbox-1/#cross-axis
+[4-14]: https://www.w3.org/TR/css-flexbox-1/#valdef-align-items-stretch
+[4-15]: https://www.w3.org/TR/css-flexbox-1/#valdef-align-items-flex-start
+[4-16]: https://www.w3.org/TR/css3-positioning/#valdef-z-index-auto
+[4-17]: https://www.w3.org/TR/css3-positioning/#propdef-z-index
+[4-18]: https://www.w3.org/TR/css3-positioning/#propdef-position
+[4-19]: https://www.w3.org/TR/css3-positioning/#valdef-position-static
+[4-20]: https://www.w3.org/TR/css-flexbox-1/#main-size
+[4-21]: https://www.w3.org/TR/CSS2/intro.html#formatting-structure
+[4-22]: https://www.w3.org/TR/CSS21/visufx.html#propdef-visibility
+[4-23]: https://www.w3.org/TR/css-flexbox-1/#layout-algorithm
+[4-24]: https://www.w3.org/TR/CSS21/visudet.html#propdef-min-width
+[4-25]: https://www.w3.org/TR/CSS21/visudet.html#propdef-min-height
+[4-26]: https://www.w3.org/TR/css-flexbox-1/#min-width-automatic-minimum-size
+[4-27]: https://www.w3.org/TR/css-flexbox-1/#content-size
+[4-28]: https://www.w3.org/TR/css-flexbox-1/#specified-size
+[4-29]: https://www.w3.org/TR/css-flexbox-1/#transferred-size
+[4-30]: https://www.w3.org/TR/css-flexbox-1/#main-size-property
+[4-31]: https://www.w3.org/TR/css-flexbox-1/#definite
+[4-32]: https://www.w3.org/TR/css-flexbox-1/#cross-size-property
+[4-33]: https://www.w3.org/TR/css-sizing-3/#min-content
+[4-34]: https://www.w3.org/TR/css-sizing-3/#valdef-width-min-content
+[4-35]: https://www.w3.org/TR/css-sizing-3/#valdef-width-max-content
+[4-36]: https://www.w3.org/TR/css-sizing-3/#valdef-width-fit-content
