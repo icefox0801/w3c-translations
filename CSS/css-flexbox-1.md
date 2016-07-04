@@ -180,7 +180,7 @@ flex布局表面上和block布局是相似的。它没有很多以文本或者�
   <tr><td>Name:</td><td>['display'][1-15]</td></tr>
   <tr><td>New values:</td><td>flex[ | ][3-1]inline-flex</td></tr>
 </tbody>
-<table>
+</table>
 
 *'flex'*  
 该值会使一个元素生成一个块级[flex容器][3-2]。  
