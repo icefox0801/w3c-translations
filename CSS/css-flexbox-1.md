@@ -39,7 +39,7 @@ W3C候选标准，2016年5月26日
 + 7 伸缩性
   + 7.1 flex缩写
     + 7.1.1 flex基本值
-  + 7.2 flex组成
+  + 7.2 伸缩性构成
     + 7.2.1 'flex-grow'属性
     + 7.2.2 'flex-shrink'属性
     + 7.2.3 'flex-basis'属性
@@ -454,7 +454,7 @@ div { flex-flow: row-reverse wrap-reverse; }
 |key|value|
 |:--|:--|
 |Name:|*'order'*|
-|Value:|<[integer][5-23]>|
+|Value:|[\<integer\>][5-23]|
 |Initial:|0|
 |Applies to:|[flex项][2-6]和[flex容器][3-2]中绝对定位的子元素|
 |Inherited:|no|
@@ -600,7 +600,7 @@ flex布局的定义目的是使[flex项][2-6]"有弹性"，在它们的宽/高�
 该组成部分设置了['flex-basis'][7-4][写法][7-7]，指定了*flex基数*：[flex项][2-6]的初始[主轴尺寸][4-20]，在空间按照flex因子被分配之前。  
 [<'flex-basis'>][7-4]接受和['width'][2-8]与['height'][2-9]相同的值（除了['auto'][7-8]会被不同对待）外加['content'][7-9]关键字。
   + *'auto'*  
-当在一个[flex项][2-6]上指定时，['auto'][7-8]关键字使[主轴尺寸属性][4-30]重新获取为使用的['flex-basis'][7-4]。如果值本身是['auto'][7-10]，那么使用的值时['content'][7-11]。
+当在一个[flex项][2-6]上指定时，['auto'][7-8]关键字使[主轴尺寸属性][4-30]重新获取为使用的['flex-basis'][7-4]。如果值本身是['auto'][7-10]，那么使用的值时['content'][7-9]。
   + *'content'*  
 表示基于[flex项][2-6]的内容自动的尺寸。  
 
@@ -608,6 +608,91 @@ flex布局的定义目的是使[flex项][2-6]"有弹性"，在它们的宽/高�
 
   + [\<'width'\>][2-8]  
 对于其他的值，['flex-basis'][7-4]与['width'][2-8]和['height'][2-9]由同样方法被解析。  
+
+&emsp;&emsp;当从['flex'][6-2]写法中省略时，它的指定值是'0'。
++ 'none'  
+['none'][7-11]关键字展开是'0 0 auto'。
+
+['flex'][6-2]组成部分的初始值等于[flex: 0 1 auto][7-12]。
+
+> 注意：['flex-grow'][7-2]和['flex-basis'][7-4]初始值和它们在['flex'][6-2]写法被省略时的默认值不同。这就是为什么['flex'][6-2]写法能够更好地适应[通常情况][7-13]。
+
+一个没有单位的0，没有两个flex因子在它之前的话，会被解释为flex因子。为了避免误解和无效的声明，我们必须指定一个带单位的为0的[<'flex-basis'>][7-4]组成或者在它前面指定两个flex因子。
+
+#### 7.1.1. ['flex'][6-2]基本值
+*本章节还不是正式标准。*
+
+下面的列表总结了四个['flex'][6-2]值通常想要的效果：
++ ['flex: initial'][6-2]
+和['flex: 0 1 auto'][6-2]相等。（这是初始值。）基于['width'][2-8]/['height'][2-9]来确定flex项的尺寸。（如果flex项的[主轴尺寸属性][4-30]计算为'auto'，会基于flex项的内容确定它的尺寸。）当有正的空余空间时它使flex项不可伸缩，但是当空间不够时它让flex项收缩到它的最小尺寸。[对齐能力][1-9]或者['auto'的margin][1-14]可用来沿[主轴][1-6]对齐flex项。
++ ['flex: auto'][6-2]
+和['flex: 1 1 auto'][6-2]相等。基于['width'][2-8]/['height'][2-9]来确定flex项的尺寸，但是会让它们变得完全可伸缩，以便它们吸收任何沿着[主轴][1-6]的空余空间。如果所有的flex项是['flex: auto'][6-2]、['flex: initial'][6-2]或['flex: none'][6-2]，在flex项确定空间以后任何正的空余空间都会平均分配给带有['flex: auto'][6-2]的flex项。
++ ['flex: none'][6-2]
+和['flex: 0 0 auto'][6-2]相等。该值根据['width'][2-8]/['height'][2-9]来确定flex项的尺寸，但是会使flex项变得[完全不可伸缩][7-14]。这和['initial'][7-15]类似，除了不允许flex项收缩，即使在溢出的情况下。
++ ['flex: \<positive-number\>'][6-2]
+和['flex: \<positive-number\> 1 0'][6-2]相等。使flex项可伸缩并且设置[flex基数][7-16]为0，结果是在flex容器中flex项接收指定比例的空余空间。如果flex容器中所有flex项都使用这一模式，它们的尺寸由指定的flex因子按比例分配。
+
+默认地，flex项不会收缩到它们的最小内容尺寸以下（最长文字或者固定尺寸元素的长度）。设置['min-width'][4-24]或['min-height'][4-25]来改变它。（参考[§4.5 flex项默认最小尺寸][7-17]）
+
+### 7.2 伸缩性构成
+伸缩性的组成由由独立的属性控制。
+
+> 我们被鼓励用['flex'][6-2]缩写控制伸缩而不是它的完整写法，因为缩写正确重置了任何未指定的组成部分来适应[通常使用][7-13]。
+
+### 7.2.1 ['flex-grow'][7-2]属性
+|key|value|
+|:--|:--|
+|Name:|*'flex-grow'*|
+|Value:|[\<number\>][7-6]|
+|Initial:|0|
+|Applies to:|[flex项][2-6]|
+|Inherited:|no|
+|Percentage:|n/a|
+|Media:|Visual|
+|Computed value:|指定值|
+|Animation type:|number|
+
+> 我们被鼓励用['flex'][6-2]缩写控制伸缩而不是直接使用['flex-grow'][7-2]，因为缩写正确重置了任何为指定的组成来适应[通常使用][7-13]。
+
+['flex-grow'][7-2]属性设置[flex伸展因子][7-1]为提供的['\<number\>'][7-6]，负数无效。
+
+#### 7.2.2 ['flex-shrink'][7-3]属性
+|key|value|
+|:--|:--|
+|Name:|*'flex-shrink'*|
+|Value:|[\<number\>][7-6]|
+|Initial:|1|
+|Applies to:|[flex项][2-6]|
+|Inherited:|no|
+|Percentage:|n/a|
+|Media:|Visual|
+|Computed value:|指定值|
+|Animation type:|number|
+
+> 我们被鼓励用['flex'][6-2]缩写控制伸缩而不是直接使用['flex-shrink'][7-3]，因为缩写正确重置了任何未指定的组成部分来适应[通常使用][7-13]。
+
+['flex-shrink'][7-3]属性设置[flex收缩因子][7-5]为提供的['\<number\>'][7-6]，负数无效。
+
+#### 7.2.3 ['flex-basis'][7-4]属性
+|key|value|
+|:--|:--|
+|Name:|*'flex-basis'*|
+|Value:|content[ \| ][3-1][\<'width'\>][2-8]|
+|Initial:|auto|
+|Applies to:|[flex项][2-6]|
+|Inherited:|no|
+|Percentage:|相对于[flex容器][3-2]的[主轴尺寸][4-20]|
+|Media:|Visual|
+|Computed value:|指定的绝对长度值|
+|Animation type:|用关键字不连续，否则是长度、百分比或计算得到的|
+
+> 我们被鼓励用['flex'][6-2]缩写控制伸缩而不是直接使用['flex-basis'][7-4]，因为缩写正确重置了任何未指定的组成部分来适应[通常使用][7-13]。
+
+['flex-basis'][7-4]属性设置了[flex基数][7-16]。它接受与['width'][2-8]和['height'][2-9]同样的值，外加['content'][7-9]。
+
+对于['auto'][7-8]和['content'][7-9]以外的所有值（上面定义的）。在水平书写模式中['flex-basis'][7-4]和['width'][2-8]解析的方式相同[CSS21][1-16]，除了值是否会解析为'auto'对于['width'][2-8]，而不是解析为['content'][7-9]对于['flex-basis'][7-4]。作为另一个推论，['flex-basis'][7-4]确定了内容盒子的尺寸，除非由其他的譬如[box-sizing][7-18]指定[CSS3UI][7-19]。
+
+## 8. 对齐
 
 [0-1]: http://www.w3.org/TR/CSS/
 [1-1]: https://www.w3.org/TR/CSS2/visuren.html#floats
@@ -715,3 +800,22 @@ flex布局的定义目的是使[flex项][2-6]"有弹性"，在它们的宽/高�
 [5-27]: https://www.w3.org/TR/css-flexbox-1/#biblio-html5
 [6-1]: https://www.w3.org/TR/css-flexbox-1/#propdef-justify-content
 [6-2]: https://www.w3.org/TR/css-flexbox-1/#propdef-flex
+[7-1]: https://www.w3.org/TR/css-flexbox-1/#flex-flex-grow-factor
+[7-2]: https://www.w3.org/TR/css-flexbox-1/#propdef-flex-grow
+[7-3]: https://www.w3.org/TR/css-flexbox-1/#propdef-flex-shrink
+[7-4]: https://www.w3.org/TR/css-flexbox-1/#propdef-flex-basis
+[7-5]: https://www.w3.org/TR/css-flexbox-1/#flex-flex-shrink-factor
+[7-6]: https://www.w3.org/TR/css3-values/#number-value
+[7-7]: https://www.w3.org/TR/css-flexbox-1/#flex-components
+[7-8]: https://www.w3.org/TR/css-flexbox-1/#valdef-flex-basis-auto
+[7-9]: https://www.w3.org/TR/css-flexbox-1/#valdef-flex-basis-content
+[7-10]: https://www.w3.org/TR/css-flexbox-1/#valdef-min-width-auto
+[7-11]: https://www.w3.org/TR/css-flexbox-1/#valdef-flex-none
+[7-12]: https://www.w3.org/TR/css-flexbox-1/#flex-initial
+[7-13]: https://www.w3.org/TR/css-flexbox-1/#flex-common
+[7-14]: https://www.w3.org/TR/css-flexbox-1/#fully-inflexible
+[7-15]: https://www.w3.org/TR/css-cascade-3/#valdef-all-initial
+[7-16]: https://www.w3.org/TR/css-flexbox-1/#flex-flex-basis
+[7-17]: https://www.w3.org/TR/css-flexbox-1/#min-size-auto
+[7-18]: https://www.w3.org/TR/css3-ui/#propdef-box-sizing
+[7-19]: https://www.w3.org/TR/css-flexbox-1/#biblio-css3ui
