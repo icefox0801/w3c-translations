@@ -151,6 +151,8 @@ flex布局表面上和block布局是相似的。它没有很多以文本或者�
 
 不像block和inline布局，他们的布局计算方式基于[block和inline流方向][2-3]来位移的，flex布局是基于*flex方向*进行偏移的。为了更简单地阐述flex布局，本章节定义了一系列flex flow相关的术语。['flex-flow'][2-4]的值和['writing mode'][2-5]确定这些术语如何与物理方向（top/right/bottom/left），坐标轴（vertical/horizontal），和尺寸（width/height）相对应。
 
+<p align="center"><img width="688" alt="图4 用于flex行容器的各种方向和尺寸的术语说明" title="图4 用于flex行容器的各种方向和尺寸的术语说明"  src="https://cloud.githubusercontent.com/assets/3138397/16656727/5d71fad6-4492-11e6-842d-8a33f77de0dc.png"></p>
+
 主轴  
 主轴维度  
 &emsp;&emsp;flex容器的*主轴*是一条[flex项][2-6]沿着它布局的主要的轴。主轴在*主轴维度*上扩展。
@@ -226,13 +228,18 @@ flex容器并不是block容器，所以一些以block布局为假设的前提下
     </span>
 </div>
 ```
+
+<br>
+<p align="center"><img width="320" alt="图6 由上面的代码确定的flex项" title="图6 由上面的代码确定的flex项" title="图4 用于flex行容器的各种方向和尺寸的术语说明"  src="https://cloud.githubusercontent.com/assets/3138397/16657149/f8775ba6-4493-11e6-8fa1-b5828859ad8b.png"></p>
+<br>
+
 > 注意里面元素的空格消失了：即使里面元素的文本*确实*在一个匿名的flex项中折行了，它也确实没有成为它自己的flex项。
 >
 > 同时注意匿名项的盒子是无法用添加样式的，因为没有元素去分配样式规则。然后它的内容仍然会从flex容器继承样式（比如字体设置）。
 
 [flex项][2-6]为它的内容建立新的格式上下文。格式上下文的类型通常由['display'][1-15]属性值决定。然而，flex项本身是*flex级*的盒子，并非块级的盒子：它们参与到它们容器的flex格式上下文中，而不是块状格式上下文。
 
----
+<h3 align="center">☆&emsp;☆&emsp;☆</h3>
 
 > 注意：阅读这篇规范的作者可能会想要[跳过下面的盒子生成和静态定位说明][4-3]。
 
@@ -437,20 +444,28 @@ flex容器为[多行][5-17]
 > **例5**  
 > 一些英文文档（按照左右，水平书写方式）中有效的流的例子：
 
+<p align="center"><img width="213" alt="flow_1" src="https://cloud.githubusercontent.com/assets/3138397/16659140/7ac5d0fe-449b-11e6-9a2d-0da6ed5a8fbb.png"></p>
 ```css
 div { flex-flow: row; }
 /* 初始值. 主轴是行内的，无折行。（项目会收缩来适应或者溢出） */
 ```
+
+<p align="center"><img width="99" alt="flow_2" src="https://cloud.githubusercontent.com/assets/3138397/16659206/b8b3cca4-449b-11e6-854d-9eed85e3d1f6.png"></p>
 ```css
 div { flex-flow: column wrap; }
 /* 主轴是块方向 （从上到下）并且在行内方向折行（向右）。 */
 ```
+
+<p align="center"><img width="170" alt="flow_3" src="https://cloud.githubusercontent.com/assets/3138397/16659238/ce6951f4-449b-11e6-8d1c-e5334e58c199.png">
+</p>
 ```css
 div { flex-flow: row-reverse wrap-reverse; }
 /* 主轴与行内方向相反（从右到左）。向上折行。 */
 ```
 
 > 注意['flex-flow'][2-4]对[书写方式][2-5]敏感。在垂直的日文中，譬如，一个['row'][5-10]flex容器将它的容器从上向下布局，就像例子中所见到的那样：
+
+<p align="center"><img width="495" alt="flows" src="https://cloud.githubusercontent.com/assets/3138397/16659328/1c3c8324-449c-11e6-8020-f1c40206a657.png"></p>
 
 ### 5.4 显示顺序：['order'][1-12]属性
 [flex项][2-6]默认会和原始文档中的出现的顺序一样显示和布局。['order'][1-12]属性被用于改变该顺序。
@@ -472,6 +487,9 @@ flex容器在*可修改的文档顺序*中布局它的内容，从最小的序�
 
 > **例6**  
 > 下面的表格展示了一个简单的标签切换界面，激活的标签始终在第一位：  
+
+<p align="center"><img width="514" alt="flows" src="https://cloud.githubusercontent.com/assets/3138397/16659378/50999d82-449c-11e6-9d22-1ec6ded19de3.png">
+</p>
 
 > 可以通过下面的CSS（只显示相关代码）实现：
 
@@ -506,6 +524,8 @@ flex容器在*可修改的文档顺序*中布局它的内容，从最小的序�
 </main>
 <footer>...</footer>
 ```
+
+<p align="center"><img width="409" alt="layout" src="https://cloud.githubusercontent.com/assets/3138397/16659521/020edcf8-449d-11e6-867e-d103c8b67ee9.png"></p>
 
 > 该布局很容易被flex布局实现：
 
@@ -567,12 +587,16 @@ main > aside   { order: 3; width: 200px; }
 
 > 因为flex容器是300px宽，只有三项在单独的一行上合适。它们占据240px，留下60px的剩余空间。因为['flex-flow'][2-4]属性指定了[多行][5-17]的flex容器（由于['wrap'][5-18]关键字出现在它的属性值中），flex容器会再创建一行来包含最后一项。
 
+<p align="center"><img width="310" alt="多行容器渲染示例" title="多行容器渲染示例" src="https://cloud.githubusercontent.com/assets/3138397/16659604/70982d46-449d-11e6-9016-5080545fded9.png"></p>
+
 一旦内容被折成多行，每一行都会独立布局；弹性长度和['justify-content'][6-1]以及['align-self'][1-13]属性一次只考虑单独在一行的项。
 
 在一个[多行][5-17][flex容器][3-2]（即使只有单独的一行），每一行的[侧轴尺寸][1-11]就是需要包含[flex项][2-6]在这一行的最小尺寸（经过['align-self'][1-13]对齐后）。在一个[单行][5-16][flex容器][3-2]中，这一行的[侧轴尺寸][1-11]就是flex容器的[侧轴尺寸][1-11]，并且['align-content'][4-12]没有影响。这一行的[主轴尺寸][4-20]总是和flex容器内容盒子的[主轴尺寸][4-20]相同。
 
 > **例10**  
 > 这有一个和前面相同的例子，除了flex项被给予['flex:auto'][6-2]。第一行有60px的剩余空间，而且所有项都有同样的伸缩性，所以那一行上的三项每一项会接受20px额外的宽度，最终100px宽。剩下的项是在它本身的行上，会伸展到这一整行的宽度，如300px。
+
+<p align="center"><img width="309" alt="图13 和以上同样地渲染，但是赋与flex项'flex: auto'" title="图13 和以上同样地渲染，但是赋与flex项'flex: auto'" src="https://cloud.githubusercontent.com/assets/3138397/16659680/c7cae95a-449d-11e6-9caa-3603ce873c1b.png"></p>
 
 ## 7. 伸缩性
 flex布局的定义目的是使[flex项][2-6]"有弹性"，在它们的宽/高适应[主轴维度][2-7]中的可用空间后。这是由['flex'][6-2]属性实现的。flex容器为它的项分配空闲空间（与它们的[flex伸展因子][7-1]成比例）来填空容器，或者收缩它们（与它们的[flex伸展因子][7-1]成比例）来阻止溢出。
@@ -615,6 +639,8 @@ flex布局的定义目的是使[flex项][2-6]"有弹性"，在它们的宽/高�
 &emsp;&emsp;当从['flex'][6-2]写法中省略时，它的指定值是'0'。
 + 'none'  
 ['none'][7-11]关键字展开是'0 0 auto'。
+
+<p align="center"><img width="446" alt="图15 一张展示'绝对'flex和'相对'flex'之间不同的图表" title="图15 一张展示'绝对'flex和'相对'flex'之间不同的图表"  src="https://cloud.githubusercontent.com/assets/3138397/16660151/c908833e-449f-11e6-95e1-c783104db0a5.png"></p>
 
 ['flex'][6-2]组成部分的初始值等于[flex: 0 1 auto][7-12]。
 
@@ -715,6 +741,9 @@ flex项上面auto的margin值和auto的margin值在块状流中有类似的效�
 > **例11**  
 > 'auto'的margin值在主轴上分割flex项到不同的组中的一个用法。下面的例子展示了如何利用它重新产生一个常用的UI模式—一个单独的动作条，一些项居左对齐，一些项居右对齐
 
+<p align="center"><img width="786" alt="下面代码渲染示例" title="下面代码渲染示例"  src="https://cloud.githubusercontent.com/assets/3138397/16660375/942a52fe-44a0-11e6-9146-bc1bfa838d76.png">
+</p>
+
 ```html
 nav > ul {
   display: flex;
@@ -734,6 +763,12 @@ nav > ul > #login {
 
 > **例12**  
 > 下面的图表说明了在溢出的情况使用['auto'的margin值][1-14]和['对齐属性'][8-5]时的差异。
+
+<p align="center">
+<img width="337" alt="图19" src="https://cloud.githubusercontent.com/assets/3138397/16660536/4bec7e4e-44a1-11e6-846d-415ba21d433b.png">
+<br>
+<i> The items in the figure on the left are centered with margins, while those in the figure on the right are centered with align-self. If this column flex container was placed against the left edge of the page, the margin behavior would be more desirable, as the long item would be fully readable. In other circumstances, the true centering behavior might be better.</i>
+</p>
 
 ### 8.2. 主轴对齐：['justify-content'][6-1]属性
 |key|value|
@@ -758,6 +793,12 @@ nav > ul > #login {
 [flex项][2-6]在一行上均匀分布。如果剩下的空余空间是负的或者这一行只有单独的一个[flex项][2-6]，该值与['flex-start'][8-6]相等。否则，这一行的第一个[flex项][2-6]的[主轴起点][5-7]外边距边缘和这一行的[主轴起点][5-7]边缘平齐地放置，这一行的最后一个[flex项][2-6]的[主轴终点][5-8]外边距边缘和这一行的[主轴终点][5-8]边缘平齐地放置，并且这一行余下的[flex项][2-6]会分布成两个相邻flex项间的空间相等。
 + 'space-around'
 [flex项][2-6]在一行上均匀分布，每一端都有一半尺寸的空间。如果剩下的空余空间是负的或者这一行只有单独的一个[flex项][2-6]，该值与['center'][8-7]相等。否则，这一行[flex项][2-6]会分布成两个相邻flex项间的空间相等，并且第一个/最后一个[flex项][2-6]和[flex容器][3-2]边缘之间的空间是[flex项][2-6]之间空间尺寸的一半。
+
+<p align="center">
+<img width="510" alt="图" src="https://cloud.githubusercontent.com/assets/3138397/16660775/64c9ade6-44a2-11e6-9305-01b27102f63e.png">
+<br>
+<i>An illustration of the five justify-content keywords and their effects on a flex container with three colored items.</i>
+</p>
 
 ### 8.3. 侧轴对齐：['align-items'][8-5]和['align-self'][1-13]属性
 |key|value|
@@ -805,6 +846,12 @@ nav > ul > #login {
 
 &emsp;&emsp;[flex项][2-6]的[侧轴起点][5-20]的外边距边缘和该行的[侧轴起点][5-20]边缘平齐放置。
 
+<p align="center">
+<img width="518" alt="图" src="https://cloud.githubusercontent.com/assets/3138397/16660879/e29aba6c-44a2-11e6-9255-1d66693e2df2.png">
+<br>
+<i>An illustration of the five align-items keywords and their effects on a flex container with four colored items.</i>
+</p>
+
 ### 8.4 填充flex行：['align-content'][4-12]属性
 |key|value|
 |:--|:--|
@@ -833,6 +880,12 @@ flex容器的行均匀分布，每一端都有一半尺寸的空间。如果剩�
 flex行会伸展来占据剩下的空间。如果剩下的空余空间是负的，该值与['flex-start'][8-11]相等。否则，空余空间会等分给所有flex行，增大它们的侧轴尺寸。
 
 > 注意：对于要对齐的flex行，只有[多行][5-17][flex容器][3-2]会在[侧轴][4-13]上有多余空间，因为在一个[单行][5-16]flex容器中唯一的一行会自动伸展来填充空间。
+
+<p align="center">
+<img width="621" alt="h3" src="https://cloud.githubusercontent.com/assets/3138397/16660955/37991cde-44a3-11e6-95a9-b602a8a43be5.png">
+<br>
+<i>An illustration of the align-content keywords and their effects on a multi-line flex container.</i>
+</p>
 
 ### 8.5. flex容器基线
 对于[flex容器][3-2]，为了它自身[参与基线对齐][8-13]（譬如当[flex容器][3-2]本身就是外部[flex容器][3-2]的一个[flex项][2-6]），它需要服从最能代表其内容基线的位置。为此，flex容器的基线确定如下（有['order'][1-12]属性重新排列后）：
