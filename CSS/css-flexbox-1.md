@@ -141,6 +141,8 @@ flex布局表面上和block布局是相似的。它没有很多以文本或者�
 </section>
 ```
 
+<p align="center"><img width="704" alt="图2：一个渲染上面代码的示例" title="图2：一个渲染上面代码的示例" src="https://cloud.githubusercontent.com/assets/3138397/16652782/68f15748-447f-11e6-8145-4559be064df7.png"></p>
+
 ### 1.2 模块交互
 该模块扩展了['display'][1-15]属性的定义[[CSS21]][1-16]，添加了一个新的块级和行内级的display类型，并且定义了一种新的带有布局控制属性的格式上下文。该模块中定义的属性不能应用在['::first-line'][1-17]或者['::first-letter'][1-18]伪元素上。
 
