@@ -1061,7 +1061,9 @@ flex容器可跨页在flex项间，在flex项的行间（在[多行][5-17]模式
 *该附录还不是正式的。*
 
 ['ltr'][A-1] + ['horizontal-tb'][A-2][书写模式][2-5]（譬如英文）
+
 |['flex-flow'][2-4]|[主轴][1-6]|[起点][A-3]|[终点][8-4]|[侧轴][4-13]|[起点][A-3]|[终点][8-4]|
+|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
 |['row'][5-10] + 'wrap'|水平|left|right|垂直|top|bottom|
 |['row-reverse'][1-4] + 'wrap'|水平|right|left|垂直|top|bottom|
 |['row'][5-10] + ['wrap-reverse'][5-19]|水平|left|right|垂直|bottom|top|
@@ -1072,7 +1074,9 @@ flex容器可跨页在flex项间，在flex项的行间（在[多行][5-17]模式
 |['column-reverse'][A-4]  + ['wrap-reverse'][5-19]|垂直|top|bottom|水平|right|left|
 
 ['ltr'][A-6] + ['horizontal-tb'][A-2][书写模式][2-5]（譬如波斯文）
+
 |['flex-flow'][2-4]|[主轴][1-6]|[起点][A-3]|[终点][8-4]|[侧轴][4-13]|[起点][A-3]|[终点][8-4]|
+|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
 |['row'][5-10] + 'wrap'|水平|right|left|垂直|top|bottom|
 |['row-reverse'][1-4] + 'wrap'|水平|left|right|垂直|top|bottom|
 |['row'][5-10] + ['wrap-reverse'][5-19]|水平|right|left|垂直|bottom|top|
@@ -1083,7 +1087,9 @@ flex容器可跨页在flex项间，在flex项的行间（在[多行][5-17]模式
 |['column-reverse'][A-4]  + ['wrap-reverse'][5-19]|垂直|top|bottom|水平|left|right|
 
 ['ltr'][A-1] + ['vertical-rl'][A-7][书写模式][2-5]（譬如日文）
+
 |['flex-flow'][2-4]|[主轴][1-6]|[起点][A-3]|[终点][8-4]|[侧轴][4-13]|[起点][A-3]|[终点][8-4]|
+|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
 |['row'][5-10] + 'wrap'|垂直|top|bottom|水平|right|left|
 |['row-reverse'][1-4] + 'wrap'|垂直|bottom|top|水平|right|left|
 |['row'][5-10] + ['wrap-reverse'][5-19]|垂直|top|bottom|水平|left|right|
