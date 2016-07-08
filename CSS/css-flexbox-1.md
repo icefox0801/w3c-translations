@@ -6,7 +6,7 @@ W3C候选标准，2016年5月26日
 ## 摘要
 这篇规范介绍了一种用于用户界面设计，优化后的CSS盒模型。在flex布局模型中，flex容器的子元素可以在任意方向进行布局，并且可以『伸缩』他们的尺寸，要么通过伸展来填补未利用的空间，要么通过收缩来避免溢出他们的父元素。  
 
-[CSS][0-1]是一门用于描述在屏幕、在纸质、在语音等媒介中，结构化文档（比如HTML和XML）渲染的语言。 
+[CSS][0-1]是一门用于描述在屏幕、纸质和语音等媒介中，结构化文档（比如HTML和XML）渲染的语言。 
 
 ## 这篇文档的状态
 *本章节描述了该文档在出版时的状态，其他文档可能会取代该文档。在[http://www.w3.org/TR/的技术报告目录](http://www.w3.org/TR/)中你可以找到当前W3C的一系列出版物和这篇技术报告的最新版。*
@@ -78,10 +78,10 @@ W3C候选标准，2016年5月26日
 *本章节还不是正式标准。*
 
 CSS2.1定义了四种布局模式—基于盒子与其兄弟、祖先元素的关系来确定尺寸和位置的算法：
-+ block布局，用来布局文档
-+ inline布局，用来布局文本
-+ table布局，用来以表格格式布局2D数据
-+ 定位布局，用来明确地定位而不考虑文档中的其他元素
++ block布局，用于布局文档
++ inline布局，用于布局文本
++ table布局，用于以表格格式布局2D数据
++ 定位布局，用于不关注文档中其他元素来十分明确地定位
 
 该模块介绍了一种新的布局模式，***flex布局***，用来布局更加复杂的应用和页面。
 
@@ -183,7 +183,7 @@ flex布局表面上和block布局是相似的。它没有很多以文本或者�
 |key|value|
 |:--|:--|
 |Name:|['display'][1-15]|
-|New values:|flex[ \| ][3-1]inline-flex|
+|New values:|flex[ &#124; ][3-1]inline-flex|
 + *'flex'*  
 该值会使一个元素生成一个块级[flex容器][3-2]。  
 + *'inline-flex'*  
@@ -229,9 +229,7 @@ flex容器并不是block容器，所以一些以block布局为假设的前提下
 </div>
 ```
 
-<br>
 <p align="center"><img width="320" alt="图6 由上面的代码确定的flex项" title="图6 由上面的代码确定的flex项" title="图4 用于flex行容器的各种方向和尺寸的术语说明"  src="https://cloud.githubusercontent.com/assets/3138397/16657149/f8775ba6-4493-11e6-8fa1-b5828859ad8b.png"></p>
-<br>
 
 > 注意里面元素的空格消失了：即使里面元素的文本*确实*在一个匿名的flex项中折行了，它也确实没有成为它自己的flex项。
 >
@@ -380,7 +378,7 @@ flex容器的内容可以在任何方向按照任何顺序布局。它使我们�
 |key|value|
 |:--|:--|
 |Name:|*['flex-direction'][5-1]*|
-|Value:|row[ \| ][3-1]row-reverse[ \| ][3-1]column[ \| ][3-1]column-reverse|
+|Value:|row[ &#124; ][3-1]row-reverse[ &#124; ][3-1]column[ &#124; ][3-1]column-reverse|
 |Initial:|row|
 |Applies to:|[flex容器][3-2]|
 |Inherited:|no|
@@ -406,7 +404,7 @@ flex容器的[主轴][1-6]和当前[书写方式][2-5]的[块状轴][5-11]有着
 |key|value|
 |:--|:--|
 |Name:|*'flex-wrap'*|
-|Value:|nowrap[ \| ][3-1]wrap[ \| ][3-1]wrap-reverse|
+|Value:|nowrap[ &#124; ][3-1]wrap[ &#124; ][3-1]wrap-reverse|
 |Initial:|nowrap|
 |Applies to:|flex容器|
 |Inherited:|no|
@@ -607,7 +605,7 @@ flex布局的定义目的是使[flex项][2-6]"有弹性"，在它们的宽/高�
 |key|value|
 |:--|:--|
 |Name:|*'flex'*|
-|Value:|none[ \| ][3-1][[<'flex-grow'>][7-2][<'flex-shrink'>?][7-3][ \|\| ][5-22][<'flex-basis'>][7-4]]|
+|Value:|none[ &#124; ][3-1][[<'flex-grow'>][7-2][<'flex-shrink'>?][7-3][ \|\| ][5-22][<'flex-basis'>][7-4]]|
 |Initial:|1 0 auto|
 |Applies to:|[flex项][2-6]|
 |Inherited:|no|
@@ -706,7 +704,7 @@ flex布局的定义目的是使[flex项][2-6]"有弹性"，在它们的宽/高�
 |key|value|
 |:--|:--|
 |Name:|*'flex-basis'*|
-|Value:|content[ \| ][3-1][\<'width'\>][2-8]|
+|Value:|content[ &#124; ][3-1][\<'width'\>][2-8]|
 |Initial:|auto|
 |Applies to:|[flex项][2-6]|
 |Inherited:|no|
@@ -774,7 +772,7 @@ nav > ul > #login {
 |key|value|
 |:--|:--|
 |Name:|*'justify-content'*|
-|Value:|flex-start[ \| ][3-1]flex-end[ \| ][3-1]center[ \| ][3-1]space-between[ \| ][3-1]space-around|
+|Value:|flex-start[ &#124; ][3-1]flex-end[ &#124; ][3-1]center[ &#124; ][3-1]space-between[ &#124; ][3-1]space-around|
 |Initial:|flex-start|
 |Applies to:|[flex容器][3-2]|
 |Inherited:|no|
@@ -801,10 +799,9 @@ nav > ul > #login {
 </p>
 
 ### 8.3. 侧轴对齐：['align-items'][8-5]和['align-self'][1-13]属性
-|key|value|
-|:--|:--|
 |Name:|*'align-items'*|
-|Value:|flex-start[ \| ][3-1]flex-end[ \| ][3-1]center[ \| ][3-1]baseline[ \| ][3-1]stretch|
+|:--|:--|
+|Value:|flex-start[ &#124; ][3-1]flex-end[ &#124; ][3-1]center[ &#124; ][3-1]baseline[ &#124; ][3-1]stretch|
 |Initial:|stretch|
 |Applies to:|[flex容器][3-2]|
 |Inherited:|no|
@@ -816,7 +813,7 @@ nav > ul > #login {
 |key|value|
 |:--|:--|
 |Name:|*'align-self'*|
-|Value:|auto[ \| ][3-1]flex-start[ \| ][3-1]flex-end[ \| ][3-1]center[ \| ][3-1]baseline[ \| ][3-1]stretch|
+|Value:|auto[ &#124; ][3-1]flex-start[ &#124; ][3-1]flex-end[ &#124; ][3-1]center[ &#124; ][3-1]baseline[ &#124; ][3-1]stretch|
 |Initial:|stretch|
 |Applies to:|[flex项][2-6]|
 |Inherited:|no|
@@ -856,7 +853,7 @@ nav > ul > #login {
 |key|value|
 |:--|:--|
 |Name:|*'align-content'*|
-|Value:|flex-start[ \| ][3-1]flex-end[ \| ][3-1]center[ \| ][3-1]space-between[ \| ][3-1]space-around[ \| ][3-1]stretch|
+|Value:|flex-start[ &#124; ][3-1]flex-end[ &#124; ][3-1]center[ &#124; ][3-1]space-between[ &#124; ][3-1]space-around[ &#124; ][3-1]stretch|
 |Initial:|stretch|
 |Applies to:|[多行][5-17][flex容器][3-2]|
 |Inherited:|no|
