@@ -467,7 +467,8 @@ div { flex-flow: row-reverse wrap-reverse; }
 <p align="center"><img width="495" alt="flows" src="https://cloud.githubusercontent.com/assets/3138397/16659328/1c3c8324-449c-11e6-8020-f1c40206a657.png"></p>
 
 ### 5.4 显示顺序：['order'][1-12]属性
-[flex项][2-6]默认会和原始文档中的出现的顺序一样显示和布局。['order'][1-12]属性被用于改变该顺序。
+[flex项][2-6]默认会和原始文档中的出现的顺序一样显示和布局。['order'][1-12]属性被用于改变该顺序。  
+
 |key|value|
 |:--|:--|
 |Name:|*'order'*|
